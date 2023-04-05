@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -84,6 +85,14 @@ fun Game(viewModel: MainViewModel) {
     }
     Row{
         Text("Winning Player [${uiState?.winner}]")
+    }
+    Row {
+        Button(
+            content = {
+                Text(text = "RESTART")
+            },
+            onClick = { viewModel.reset() }
+        )
     }
 }
 

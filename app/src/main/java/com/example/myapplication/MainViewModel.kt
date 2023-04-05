@@ -27,8 +27,6 @@ class MainViewModel : ViewModel() {
         else -> player1
     }
 
-    // TODO implement reset option
-
     fun select(index: Int) : Boolean {
         val changed = uiState.value?.positions?.toMutableList()
         // block changing and already set field
@@ -86,6 +84,10 @@ class MainViewModel : ViewModel() {
 
     @VisibleForTesting
     fun gameIsOver() = winner != EMPTY // when all is set or winner found
+
+    fun reset() {
+        uiState.postValue(UiState())
+    }
 
     companion object {
         const val TAG = "tictactoe"
