@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import com.google.common.truth.Truth
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -14,7 +15,8 @@ class ExampleUnitTest {
     //X always goes first.
     @Test
     fun `always begin playing with X`(){
-
+        val viewModel = MainViewModel()
+        Truth.assertThat(viewModel.getPlayer()).isEqualTo('X')
     }
 
     //Players cannot play on a played position.
