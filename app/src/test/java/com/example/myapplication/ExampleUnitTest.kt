@@ -46,7 +46,15 @@ class ExampleUnitTest {
     //If all nine squares are filled and neither player has three in a row, the game is a draw.
     @Test
     fun `game over when all fields set`(){
-
+        val viewModel = MainViewModel()
+        // select all 9 fields
+        for(index in 0..9) {
+            Truth.assertThat(viewModel.select(index)).isTrue()
+        }
+        // now any selection should be blocked
+        for(index in 0..9) {
+            Truth.assertThat(viewModel.select(index)).isFalse()
+        }
     }
 
 }
