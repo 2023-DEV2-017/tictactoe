@@ -22,6 +22,7 @@ class ExampleUnitTest {
     fun `always begin playing with X`(){
         val viewModel = MainViewModel()
         Truth.assertThat(viewModel.getPlayer()).isEqualTo('X')
+        Truth.assertThat(viewModel.getPlayer()).isEqualTo('O')
     }
 
     //Players cannot play on a played position.

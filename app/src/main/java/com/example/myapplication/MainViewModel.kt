@@ -6,10 +6,23 @@ import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
 
+    private var player1: Char? = null
+    private var player2: Char? = null
+    private var activePlayer: Char = X
+
     val uiState: MutableLiveData<UiState> = MutableLiveData(UiState())
 
-    fun getPlayer(): Char {
-        return 'O' // TODO alternate players
+    fun getPlayer() = when {
+        player1 == null -> {
+            player1 = X // first player always X
+            player1
+        }
+        player2 == null -> {
+            player2 = O // second player always O
+            player2
+        }
+        activePlayer == player1 -> player2
+        else -> player1
     }
 
     fun select(index: Int) : Boolean {
@@ -31,10 +44,14 @@ class MainViewModel : ViewModel() {
 
 }
 
+const val EMPTY = ' '
+const val X = 'X'
+const val O = 'O'
+
 data class UiState(
     val positions: List<Char> = listOf(
-        ' ', ' ', ' ',
-        ' ', ' ', ' ',
-        ' ', ' ', ' ',
+        EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY,
     )
 )
