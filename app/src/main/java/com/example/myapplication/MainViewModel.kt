@@ -13,7 +13,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun select(index: Int) : Boolean {
-        Log.d(TAG, "${uiState.value?.positions}")
+        val changed = uiState.value?.positions
+        Log.d(TAG, "${changed?.subList(0,3)}")
+        Log.d(TAG, "${changed?.subList(3,6)}")
+        Log.d(TAG, "${changed?.subList(6,9)}")
         // TODO should only allow picking same index once
         return true
     }

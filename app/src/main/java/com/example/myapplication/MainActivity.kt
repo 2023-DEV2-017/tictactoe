@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Column{
+                    Column {
                         Greeting("Android")
                         Game(viewModel)
                     }
@@ -59,9 +59,9 @@ fun Game(viewModel: MainViewModel) {
 
     val uiState by viewModel.uiState.observeAsState()
 
-    uiState?.positions?.chunked(3)?.forEach { elements ->
+    uiState?.positions?.chunked(3)?.forEachIndexed { index1, elements ->
         Row {
-            elements.forEachIndexed { index, element ->
+            elements.forEachIndexed { index2, element ->
                 Text(
                     text = "$element",
                     fontSize = 30.sp,
@@ -69,9 +69,9 @@ fun Game(viewModel: MainViewModel) {
                     modifier = Modifier
                         .size(100.dp)
                         .border(width = 1.dp, color = Color.Black)
-                        .wrapContentHeight(align= CenterVertically)
+                        .wrapContentHeight(align = CenterVertically)
                         .clickable {
-                            viewModel.select(index)
+                            viewModel.select(index1 * 3 + index2)
                         }
                 )
             }
