@@ -34,6 +34,9 @@ class MainViewModel : ViewModel() {
         // block changing and already set field
         if (positionIsBlocked(changed, index))
             return false
+        // check for game over
+        if (gameIsOver())
+            return false
         // update active player
         activePlayer = getPlayer() ?: X
         // update character
@@ -65,9 +68,13 @@ class MainViewModel : ViewModel() {
             // diagonal
             p[0] == p[4] && p[0] == p[8] -> p[0]
             p[2] == p[4] && p[2] == p[6] -> p[2]
+            !p.any { it == EMPTY } -> GAME_OVER // when all is set
             else -> EMPTY // no winner, still playing
         }
     }
+
+    @VisibleForTesting
+    fun gameIsOver() = winner != EMPTY // when all is set or winner found
 
     companion object {
         const val TAG = "tictactoe"
@@ -78,6 +85,7 @@ class MainViewModel : ViewModel() {
 const val EMPTY = ' '
 const val X = 'X'
 const val O = 'O'
+const val GAME_OVER = 'Y'
 
 data class UiState(
     val positions: List<Char> = listOf(

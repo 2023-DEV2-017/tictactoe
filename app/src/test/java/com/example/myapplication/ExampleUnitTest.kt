@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import com.google.common.truth.Truth
+import com.google.common.truth.Truth.*
 import junitparams.JUnitParamsRunner
 import junitparams.Parameters
 import org.junit.Test
@@ -21,8 +22,8 @@ class ExampleUnitTest {
     @Test
     fun `always begin playing with X`(){
         val viewModel = MainViewModel()
-        Truth.assertThat(viewModel.getPlayer()).isEqualTo('X')
-        Truth.assertThat(viewModel.getPlayer()).isEqualTo('O')
+        assertThat(viewModel.getPlayer()).isEqualTo('X')
+        assertThat(viewModel.getPlayer()).isEqualTo('O')
     }
 
     //Players cannot play on a played position.
@@ -30,15 +31,15 @@ class ExampleUnitTest {
     @Parameters(method = "paramsCheckBlocked")
     fun `block changing value once picked`(data: List<Char>, position: Int, expected: Boolean){
         val viewModel = MainViewModel()
-        Truth.assertThat(viewModel.positionIsBlocked(data, position)).isEqualTo(expected)
+        assertThat(viewModel.positionIsBlocked(data, position)).isEqualTo(expected)
     }
 
     //Players alternate placing X’s and O’s on the board until either:
     @Test
     fun `alternate players`(){
         val viewModel = MainViewModel()
-        Truth.assertThat(viewModel.getPlayer()).isEqualTo('X')
-        Truth.assertThat(viewModel.getPlayer()).isEqualTo('O')
+        assertThat(viewModel.getPlayer()).isEqualTo('X')
+        assertThat(viewModel.getPlayer()).isEqualTo('O')
     }
 
     //One player has three in a row, horizontally, vertically or diagonally
@@ -47,8 +48,7 @@ class ExampleUnitTest {
     @Parameters(method = "checkWinningParams")
     fun `check winning combinations`(input: List<Char>, expected: Char){
         val viewModel = MainViewModel()
-        Truth.assertThat(viewModel.checkWinner(input)).isEqualTo(expected)
-        // TODO parameterize for more
+        assertThat(viewModel.checkWinner(input)).isEqualTo(expected)
     }
 
     //All nine squares are filled.
@@ -56,14 +56,16 @@ class ExampleUnitTest {
     @Test
     fun `game over when all fields set`(){
         val viewModel = MainViewModel()
-        // select all 9 fields
-        for(index in 0..9) {
-            Truth.assertThat(viewModel.select(index)).isTrue()
-        }
-        // now any selection should be blocked
-        for(index in 0..9) {
-            Truth.assertThat(viewModel.select(index)).isFalse()
-        }
+        assertThat(viewModel.checkWinner(listOf(
+            'X', 'O', 'O',
+            'O', ' ', 'O',
+            'O', 'O', 'X',
+        ))).isEqualTo(EMPTY)
+        assertThat(viewModel.checkWinner(listOf(
+            'X', 'X', 'O',
+            'O', 'X', 'X',
+            'X', 'O', '0',
+        ))).isEqualTo(GAME_OVER)
     }
 
     private fun paramsCheckBlocked() = listOf(
