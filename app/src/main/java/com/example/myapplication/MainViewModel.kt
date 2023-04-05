@@ -11,4 +11,6 @@ class MainViewModel : ViewModel() {
         return 'O' // TODO alternate players
     }
 
+    fun select(index: Int) = true // should only allow picking same index once
+
 }

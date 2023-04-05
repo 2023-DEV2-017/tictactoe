@@ -22,7 +22,9 @@ class ExampleUnitTest {
     //Players cannot play on a played position.
     @Test
     fun `block changing value once picked`(){
-
+        val viewModel = MainViewModel()
+        Truth.assertThat(viewModel.select(2)).isTrue() // pick once
+        Truth.assertThat(viewModel.select(2)).isFalse()// block second time
     }
 
     //Players alternate placing X’s and O’s on the board until either:
