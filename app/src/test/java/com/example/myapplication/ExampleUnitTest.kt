@@ -1,15 +1,20 @@
 package com.example.myapplication
 
 import com.google.common.truth.Truth
+import junitparams.JUnitParamsRunner
+import junitparams.Parameters
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+@RunWith(JUnitParamsRunner::class)
 class ExampleUnitTest {
 
     //X always goes first.
@@ -38,14 +43,10 @@ class ExampleUnitTest {
     //One player has three in a row, horizontally, vertically or diagonally
     //If a player is able to draw three X’s or three O’s in a row, that player wins.
     @Test
-    fun `check winning combinations`(){
+    @Parameters(method = "checkWinningParams")
+    fun `check winning combinations`(input: List<Char>, expected: Char){
         val viewModel = MainViewModel()
-        val winnerX = listOf(
-            'X', 'O', 'O',
-            'O', 'X', 'O',
-            'O', 'O', 'X',
-        )
-        Truth.assertThat(viewModel.checkWinner(winnerX)).isEqualTo('X')
+        Truth.assertThat(viewModel.checkWinner(input)).isEqualTo(expected)
         // TODO parameterize for more
     }
 
@@ -63,5 +64,48 @@ class ExampleUnitTest {
             Truth.assertThat(viewModel.select(index)).isFalse()
         }
     }
+
+    private fun checkWinningParams() = listOf(
+        arrayOf(listOf(
+            'X', 'O', 'O',
+            'O', 'X', 'O',
+            'O', 'O', 'X',
+        ), 'X'),
+        arrayOf(listOf(
+            'X', 'X', 'X',
+            'O', 'X', 'O',
+            'X', 'O', 'O',
+        ), 'X'),
+        arrayOf(listOf(
+            'X', 'O', 'O',
+            'X', 'X', 'X',
+            'O', 'X', 'O',
+        ), 'X'),
+        arrayOf(listOf(
+            'X', 'X', 'O',
+            'O', 'X', 'X',
+            'O', 'X', 'O',
+        ), 'X'),
+        arrayOf(listOf(
+            'O', 'O', 'O',
+            'O', 'X', 'O',
+            'O', 'O', 'X',
+        ), 'O'),
+        arrayOf(listOf(
+            'X', 'O', 'X',
+            'O', 'O', 'X',
+            'X', 'O', 'O',
+        ), 'O'),
+        arrayOf(listOf(
+            'O', 'X', 'O',
+            'X', 'O', 'X',
+            'O', 'X', 'O',
+        ), 'O'),
+        arrayOf(listOf(
+            'X', 'X', 'O',
+            'O', 'O', 'X',
+            'O', 'O', 'O',
+        ), 'O'),
+    )
 
 }
