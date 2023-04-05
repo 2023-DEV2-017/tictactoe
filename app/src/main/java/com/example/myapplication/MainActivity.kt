@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -69,6 +70,9 @@ fun Game(viewModel: MainViewModel) {
                         .size(100.dp)
                         .border(width = 1.dp, color = Color.Black)
                         .wrapContentHeight(align= CenterVertically)
+                        .clickable {
+                            viewModel.select(index)
+                        }
                 )
             }
         }
