@@ -41,9 +41,20 @@ class MainViewModel : ViewModel() {
         activePlayer = getPlayer() ?: X
         // update character
         changed?.set(index, activePlayer)
-        uiState.postValue(uiState.value?.copy(positions = changed.orEmpty()))
+        uiState.postValue(uiState.value?.copy(
+            positions = changed.orEmpty(),
+            player = activePlayer,
+        ))
         // check winner
         winner = checkWinner(changed.orEmpty())
+        if( gameIsOver() ){
+            // show winner
+            uiState.postValue(uiState.value?.copy(
+                positions = changed.orEmpty(),
+                player = activePlayer,
+                winner = winner)
+            )
+        }
         // logging
         Log.d(TAG, "${changed?.subList(0,3)}")
         Log.d(TAG, "${changed?.subList(3,6)}")
@@ -92,5 +103,7 @@ data class UiState(
         EMPTY, EMPTY, EMPTY,
         EMPTY, EMPTY, EMPTY,
         EMPTY, EMPTY, EMPTY,
-    )
+    ),
+    val player: Char = EMPTY,
+    val winner: Char = EMPTY,
 )

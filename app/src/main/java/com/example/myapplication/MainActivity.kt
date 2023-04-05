@@ -78,6 +78,13 @@ fun Game(viewModel: MainViewModel) {
             }
         }
     }
+
+    Row{
+        Text("Current Player [${uiState?.player}]")
+    }
+    Row{
+        Text("Winning Player [${uiState?.winner}]")
+    }
 }
 
 @Preview(showBackground = true)
