@@ -27,10 +27,10 @@ class ExampleUnitTest {
 
     //Players cannot play on a played position.
     @Test
-    fun `block changing value once picked`(){
+    @Parameters(method = "paramsCheckBlocked")
+    fun `block changing value once picked`(data: List<Char>, position: Int, expected: Boolean){
         val viewModel = MainViewModel()
-        Truth.assertThat(viewModel.select(2)).isTrue() // pick once
-        Truth.assertThat(viewModel.select(2)).isFalse()// block second time
+        Truth.assertThat(viewModel.positionIsBlocked(data, position)).isEqualTo(expected)
     }
 
     //Players alternate placing X’s and O’s on the board until either:
@@ -65,6 +65,24 @@ class ExampleUnitTest {
             Truth.assertThat(viewModel.select(index)).isFalse()
         }
     }
+
+    private fun paramsCheckBlocked() = listOf(
+        arrayOf(listOf(
+            'X', 'O', 'O',
+            'O', 'X', 'O',
+            'O', 'O', 'X',
+        ), 0, true),
+        arrayOf(listOf(
+            'X', 'X', 'O',
+            ' ', ' ', ' ',
+            ' ', ' ', ' ',
+        ), 2, true),
+        arrayOf(listOf(
+            ' ', ' ', ' ',
+            'O', 'X', ' ',
+            'O', 'O', ' ',
+        ), 1, false),
+    )
 
     private fun checkWinningParams() = listOf(
         arrayOf(listOf(

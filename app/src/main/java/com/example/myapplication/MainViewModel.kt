@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -27,17 +28,23 @@ class MainViewModel : ViewModel() {
 
     fun select(index: Int) : Boolean {
         val changed = uiState.value?.positions?.toMutableList()
-        Log.d(TAG, "${changed?.subList(0,3)}")
-        Log.d(TAG, "${changed?.subList(3,6)}")
-        Log.d(TAG, "${changed?.subList(6,9)}")
+        // block changing and already set field
+        if (positionIsBlocked(changed, index))
+            return false
         // update active player
         activePlayer = getPlayer() ?: X
         // update character
         changed?.set(index, activePlayer)
         uiState.postValue(uiState.value?.copy(positions = changed.orEmpty()))
-        // TODO should only allow picking same index once
+        // logging
+        Log.d(TAG, "${changed?.subList(0,3)}")
+        Log.d(TAG, "${changed?.subList(3,6)}")
+        Log.d(TAG, "${changed?.subList(6,9)}")
         return true
     }
+
+    @VisibleForTesting
+    fun positionIsBlocked(changed: List<Char>?, index: Int) = changed?.get(index) != EMPTY
 
     fun checkWinner(positions: List<Char>) {
         TODO("Not yet implemented")
