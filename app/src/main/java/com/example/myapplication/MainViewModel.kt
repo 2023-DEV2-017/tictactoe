@@ -10,6 +10,7 @@ class MainViewModel : ViewModel() {
     private var player1: Char? = null
     private var player2: Char? = null
     private var activePlayer: Char = X
+    private var winner: Char = EMPTY
 
     val uiState: MutableLiveData<UiState> = MutableLiveData(UiState())
 
@@ -26,6 +27,8 @@ class MainViewModel : ViewModel() {
         else -> player1
     }
 
+    // TODO implement reset option
+
     fun select(index: Int) : Boolean {
         val changed = uiState.value?.positions?.toMutableList()
         // block changing and already set field
@@ -36,18 +39,34 @@ class MainViewModel : ViewModel() {
         // update character
         changed?.set(index, activePlayer)
         uiState.postValue(uiState.value?.copy(positions = changed.orEmpty()))
+        // check winner
+        winner = checkWinner(changed.orEmpty())
         // logging
         Log.d(TAG, "${changed?.subList(0,3)}")
         Log.d(TAG, "${changed?.subList(3,6)}")
         Log.d(TAG, "${changed?.subList(6,9)}")
+        Log.d(TAG, "winner is $winner")
         return true
     }
 
     @VisibleForTesting
     fun positionIsBlocked(changed: List<Char>?, index: Int) = changed?.get(index) != EMPTY
 
-    fun checkWinner(positions: List<Char>) {
-        TODO("Not yet implemented")
+    fun checkWinner(p: List<Char>): Char {
+        return when {
+            // horizontal
+            p[0] == p[1] && p[1] == p[2] -> p[0]
+            p[3] == p[4] && p[3] == p[5] -> p[3]
+            p[6] == p[7] && p[6] == p[8] -> p[6]
+            // vertical
+            p[0] == p[3] && p[0] == p[6] -> p[0]
+            p[1] == p[4] && p[1] == p[7] -> p[1]
+            p[2] == p[5] && p[2] == p[8] -> p[2]
+            // diagonal
+            p[0] == p[4] && p[0] == p[8] -> p[0]
+            p[2] == p[4] && p[2] == p[6] -> p[2]
+            else -> EMPTY // no winner, still playing
+        }
     }
 
     companion object {
