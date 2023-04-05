@@ -10,8 +10,37 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
+    //X always goes first.
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun `always begin playing with X`(){
+
     }
+
+    //Players cannot play on a played position.
+    @Test
+    fun `block changing value once picked`(){
+
+    }
+
+    //Players alternate placing X’s and O’s on the board until either:
+    @Test
+    fun `alternate players`(){
+
+    }
+
+    //One player has three in a row, horizontally, vertically or diagonally
+    //If a player is able to draw three X’s or three O’s in a row, that player wins.
+    @Test
+    fun `check winning combinations`(){
+
+    }
+
+    //All nine squares are filled.
+    //If all nine squares are filled and neither player has three in a row, the game is a draw.
+    @Test
+    fun `game over when all fields set`(){
+
+    }
+
 }
