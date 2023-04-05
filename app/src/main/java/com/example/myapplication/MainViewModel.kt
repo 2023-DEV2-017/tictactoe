@@ -21,15 +21,20 @@ class MainViewModel : ViewModel() {
             player2 = O // second player always O
             player2
         }
-        activePlayer == player1 -> player2
+        activePlayer == player1 -> player2 // alternate players
         else -> player1
     }
 
     fun select(index: Int) : Boolean {
-        val changed = uiState.value?.positions
+        val changed = uiState.value?.positions?.toMutableList()
         Log.d(TAG, "${changed?.subList(0,3)}")
         Log.d(TAG, "${changed?.subList(3,6)}")
         Log.d(TAG, "${changed?.subList(6,9)}")
+        // update active player
+        activePlayer = getPlayer() ?: X
+        // update character
+        changed?.set(index, activePlayer)
+        uiState.postValue(uiState.value?.copy(positions = changed.orEmpty()))
         // TODO should only allow picking same index once
         return true
     }
