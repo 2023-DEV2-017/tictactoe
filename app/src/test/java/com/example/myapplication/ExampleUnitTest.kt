@@ -39,7 +39,14 @@ class ExampleUnitTest {
     //If a player is able to draw three X’s or three O’s in a row, that player wins.
     @Test
     fun `check winning combinations`(){
-
+        val viewModel = MainViewModel()
+        val winnerX = listOf(
+            'X', 'O', 'O',
+            'O', 'X', 'O',
+            'O', 'O', 'X',
+        )
+        Truth.assertThat(viewModel.checkWinner(winnerX)).isEqualTo('X')
+        // TODO parameterize for more
     }
 
     //All nine squares are filled.
