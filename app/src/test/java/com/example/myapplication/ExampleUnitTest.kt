@@ -28,7 +28,9 @@ class ExampleUnitTest {
     //Players alternate placing X’s and O’s on the board until either:
     @Test
     fun `alternate players`(){
-
+        val viewModel = MainViewModel()
+        Truth.assertThat(viewModel.getPlayer()).isEqualTo('X')
+        Truth.assertThat(viewModel.getPlayer()).isEqualTo('O')
     }
 
     //One player has three in a row, horizontally, vertically or diagonally
